@@ -5,10 +5,10 @@ export default {
 	timestamps: {
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		currentTime: () => new Date(),
+		currentTime: () => new Date()
 	},
 	versionKey: false,
 	suppressReservedKeysWarning: false,
 	strictQuery: false,
-	strictPopulate: false,
-};
+	strictPopulate: false
+}

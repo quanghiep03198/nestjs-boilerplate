@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { MailerModule } from './modules/mailer/mailer.module';
-import { UserModule } from './modules/user/user.module';
-import { PostModule } from './modules/post/post.module';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { DatabaseModule } from './database/database.module'
+import { AuthModule } from './modules/auth/auth.module'
+import { MailerModule } from './modules/mailer/mailer.module'
+import { UserModule } from './modules/user/user.module'
+import { PostModule } from './modules/post/post.module'
 
 @Module({
 	imports: [
@@ -21,14 +21,14 @@ import { PostModule } from './modules/post/post.module';
 				 * 		tls: true
 				 * 	})
 				 */
-			],
+			]
 		}),
 		DatabaseModule,
 		UserModule,
 		AuthModule,
 		MailerModule,
-		PostModule,
+		PostModule
 	],
-	controllers: [],
+	controllers: []
 })
 export class AppModule {}

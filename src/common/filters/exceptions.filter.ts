@@ -1,5 +1,5 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
+import { HttpAdapterHost } from '@nestjs/core'
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -11,15 +11,18 @@ export class AllExceptionsFilter implements ExceptionFilter {
 	 * @param {ArgumentsHost} host
 	 */
 	catch(exception: HttpException | Error, host: ArgumentsHost): void {
-		const { httpAdapter } = this.httpAdapterHost;
-		const ctx = host.switchToHttp();
-		const httpStatus = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+		const { httpAdapter } = this.httpAdapterHost
+		const ctx = host.switchToHttp()
+		const httpStatus =
+			exception instanceof HttpException
+				? exception.getStatus()
+				: HttpStatus.INTERNAL_SERVER_ERROR
 		const responseBody = {
 			message: exception.message,
 			statusCode: httpStatus,
 			timestamp: new Date().toISOString(),
-			path: httpAdapter.getRequestUrl(ctx.getRequest()),
-		};
-		httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+			path: httpAdapter.getRequestUrl(ctx.getRequest())
+		}
+		httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)
 	}
 }
