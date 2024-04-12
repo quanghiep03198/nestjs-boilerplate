@@ -1,0 +1,82 @@
+name: nest-mongo
+services:
+   # #######################################################################
+   #                         RESTful APIs applications
+   # #######################################################################
+
+   server:
+      container_name: api
+      build:
+         context: .
+         dockerfile: ./Dockerfile
+         target: development
+      command: npm run start:dev
+      develop:
+         watch:
+            - action: sync
+              path: ./src
+              target: /app/src
+              ignore:
+                 - node_modules
+            - action: rebuild
+              path: package.json
+      env_file:
+         - .env
+      depends_on:
+         - mongodb-primary
+         - mongodb-secondary
+         - mongodb-arbiter
+      volumes:
+         - .:/usr/src/app
+         - /usr/src/app/node_modules
+      ports:
+         - 3001:3001
+      networks:
+         - common
+
+   # #######################################################################
+   #                         Services & Databases
+   # #######################################################################
+   mongodb-primary:
+      container_name: mongodb-primary
+      image: mongo
+      volumes:
+         - mongodb_master_data:/data/db
+         - ./scripts:/scripts
+      ports:
+         - 27001:27017
+      links:
+         - mongodb-secondary
+         - mongodb-arbiter
+      restart: always
+      healthcheck:
+         test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongod -u mongod-p mongod --quiet) -eq 1
+         interval: 10s
+         start_period: 30s
+      command: ['--bind_ip_all', '--replSet', 'rs0']
+
+   mongodb-secondary:
+      container_name: mongodb-secondary
+      image: mongo
+      ports:
+         - 27002:27017
+      restart: always
+      command: ['--bind_ip_all', '--replSet', 'rs0']
+
+   mongodb-arbiter:
+      container_name: mongodb-arbiter
+      image: mongo
+      ports:
+         - 27003:27017
+      restart: always
+      command: ['--bind_ip_all', '--replSet', 'rs0']
+
+volumes:
+   mongodb_master_data:
+      driver: local
+   cache:
+      driver: local
+
+networks:
+   common:
+      driver: bridge
