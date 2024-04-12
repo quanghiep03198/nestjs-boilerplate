@@ -1,0 +1,33 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Verify your email</title>
+		<style>
+			h1, h2, h3, h4, h5, h6, p, span, i, b { color: black } .btn { background-color: #f15e2c; color: white; padding:
+			8px 16px; border-radius: 4px; text-decoration: none !important; } .btn:hover { opacity: 0.9; transition:
+			ease-in-out 0.2s } .divider { height: 1px; background-color: lightgray; width: 100%; }
+		</style>
+	</head>
+
+	<body>
+		<h3>Verify your email</h3>
+		<p>
+			Hi
+			<b>{{display_name}}</b>
+			<br />
+			<br />
+			<span>You need one more step to complete your registration.</span>
+			<br />
+			<span>To verify your email, click on the button bellow:</span>
+			<br />
+			<br />
+			<a href={{url}} target='_blank' class='btn'>
+				Verify your email
+			</a>
+		</p>
+		<hr style='divider' />
+		<b>This link is only valid for 1 hour.</b>
+	</body>
+
+</html>
