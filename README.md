@@ -11,9 +11,9 @@
 
 ### 👉 Description
 
-**Nestjs/MongoDB boilerplate** 😎😎😎
+**Nest/Mongodb boilerplate** 😎😎😎
 
-### Installation
+### 👉 Installation
 
 ```bash
 $ npm install
