@@ -10,6 +10,7 @@ export class PostService extends BaseAbstractService<PostDocument> implements IP
 	constructor(@Inject(PostRepository.name) private readonly postRepository: PostRepository) {
 		super(postRepository)
 	}
+	
 	async findUnpublishedPosts({
 		page,
 		limit
@@ -19,18 +20,22 @@ export class PostService extends BaseAbstractService<PostDocument> implements IP
 	}): Promise<PaginateResult<PostDocument>> {
 		return await this.postRepository.findUnpublishedPosts({ page, limit })
 	}
+	
 	async findAllPostOfUser(
 		userId: Types.ObjectId,
 		paginateOptions: PaginateOptions
 	): Promise<PaginateResult<PostDocument>> {
 		return await this.postRepository.findAllPostOfUser(userId, paginateOptions)
 	}
+	
 	async approvePost(postId: Types.ObjectId): Promise<PostDocument> {
 		return await this.postRepository.approvePost(postId)
 	}
+	
 	async publishPost(postId: Types.ObjectId): Promise<PostDocument> {
 		return await this.postRepository.publishPost(postId)
 	}
+	
 	async findOneBySlug(slug: string): Promise<PostDocument> {
 		return await this.postRepository.findOneBySlug(slug)
 	}
