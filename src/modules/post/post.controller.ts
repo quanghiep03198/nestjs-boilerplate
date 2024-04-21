@@ -26,7 +26,7 @@ import {
 import mongoose from 'mongoose'
 import { JwtGuard } from '../auth/guards/jwt.guard'
 import { IUser } from '../user/interfaces/user.interface'
-import { CreatePostDTO, createPostValidator } from './dto/post.dto'
+import { CreatePostDTO, UpdatePostDTO, createPostValidator, updatePostValidator } from './dto/post.dto'
 import { PostService } from './post.service'
 
 @Controller('posts')
@@ -100,11 +100,10 @@ export class PostController {
 	@ResponseMessage('Updated post successfully')
 	@UseInterceptors(TransformInterceptor)
 	@UseGuards(JwtGuard)
-	// @UsePipes(new ZodValidationPipe(updatePostValidator))
 	@UseFilters(AllExceptionsFilter)
 	async updatePost(
 		@Param('id', ParseObjectIdPipe) postId: mongoose.Types.ObjectId,
-		@Body() payload: any
+		@Body(new ZodValidationPipe(updatePostValidator)) payload: UpdatePostDTO
 	) {
 		return await this.postService.findByIdAndUpdate(postId, payload)
 	}
