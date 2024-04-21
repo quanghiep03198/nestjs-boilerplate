@@ -130,6 +130,7 @@ export class PostController {
 	async approvePost(@Param('id', ParseObjectIdPipe) postId: mongoose.Types.ObjectId) {
 		return await this.postService.approvePost(postId)
 	}
+	
 	@Patch('publish/:id')
 	@HttpCode(HttpStatus.CREATED)
 	@ResponseMessage('Published post successfully')
